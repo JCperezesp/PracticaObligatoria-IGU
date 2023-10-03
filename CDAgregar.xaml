@@ -1,0 +1,166 @@
+﻿<Window x:Class="PracticaObligatoria.CDAgregar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PracticaObligatoria"
+        xmlns:icons="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Agregar vehículo" Height="650" Width="500" ResizeMode="NoResize" 
+        Background="{StaticResource FondoCDModal}">
+
+    <!--DEFINICIÓN ESTILOS SENCILLOS PARA TEXTBLOCKS Y TEXTBOXES-->
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="{StaticResource color1Fuente}"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DarkRed"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="local:NumericTextBox">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DarkRed"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DarkRed"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    
+    <!--CUERPO DEL DISEÑO-->
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/recursos/background.jpg" Opacity="0.05"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+    <!-- CABECERA DE VENTANA -->
+        
+        <Label Name="cabeceraAgregar" Grid.ColumnSpan="6" Height="60" 
+               BorderBrush="{StaticResource bordeCabeceraAgregar}" BorderThickness="2">
+            <Label.Background>
+                <LinearGradientBrush StartPoint="0.2,0" EndPoint="0.8,1">
+                    <GradientStop Color="{StaticResource Azul4}" Offset="0"/>
+                    <GradientStop Color="{StaticResource Azul2}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource Marino1}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource Marino4}" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Background>
+        </Label>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="DATOS OBLIGATORIOS"
+                   FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontFamily="Comic Sans MS" Foreground="Black"/>
+        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Text="DATOS DE REPOSTAJE"
+                   FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontFamily="Comic Sans MS" Foreground="AliceBlue"/>
+    <!-- FIN CABECERA DE VENTANA -->
+    <!-- CUERPO DE VENTANA -->
+
+        <TextBlock Text="MATRÍCULA: " Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="20,20,5,20"/>
+        <TextBox Name="cajaMatricula" Grid.Row="1" Grid.Column="1" Margin="0,40" 
+                 TextChanged="cajaTexto_TextChanged" />
+
+        <TextBlock Text="MARCA: " Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="20,20,0,20"/>
+        <TextBox Name="cajaMarca" Grid.Row="2" Grid.Column="1" Margin="0,40"
+                 TextChanged="cajaTexto_TextChanged"/>
+        <TextBlock Text="KILÓMETROS: " Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="20,20,5,20"/>
+        <local:NumericTextBox x:Name="cajaKM" Grid.Row="3" Grid.Column="1" Margin="0,40" BorderBrush="DarkRed"
+                 TextChanged="cajaTexto_TextChanged"/>
+
+        <RepeatButton Name="MasKilometros" Grid.Row="3" Grid.Column=" 1" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Left" Margin="10,21" Click="Mas_Click">
+            <icons:ImageAwesome Icon="Plus" Margin="2"/>
+        </RepeatButton>
+        <RepeatButton Name="MenosKilometros" Grid.Row="3" Grid.Column=" 1" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right" Margin="10,21" Click="Menos_Click">
+            <icons:ImageAwesome Icon="Minus" Margin="4"/>
+        </RepeatButton>
+
+        <!-- Datos repostaje -->
+        <TextBlock Text="FECHA: " Grid.Column="3" Grid.Row="1" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="10,10,5,10"/>
+        <DatePicker Name="CajaDeFecha" Grid.Row="1" Grid.Column="4" 
+                    SelectedDateChanged="CajaDeFecha_SelectedDateChanged" 
+                    Margin="0,40"/>
+
+        <TextBlock Text="LITROS: " Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="10,10,5,10"/>
+        <local:NumericTextBox x:Name="cajaLitros" Grid.Row="2" Grid.Column="4" Margin="0,40"
+                 TextChanged="cajaRepos_TextChanged"/>
+        <RepeatButton Name="MasLitros" Grid.Row="2" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Left" Margin="10,21" Click="Mas_Click">
+            <icons:ImageAwesome Icon="Plus" Margin="2" />
+        </RepeatButton>
+        <RepeatButton Name="MenosLitros" Grid.Row="2" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right" Margin="10,21" Click="Menos_Click">
+            <icons:ImageAwesome Icon="Minus" Margin="4"/>
+        </RepeatButton>
+
+        <TextBlock Text="COSTE: " Grid.Column="3" Grid.Row="3" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="10,10,5,10"/>
+        <local:NumericTextBox x:Name="cajaCoste" Grid.Row="3" Grid.Column="4" Margin="0,40" 
+                 TextChanged="cajaRepos_TextChanged"/>
+        <RepeatButton Name="MasCoste" Grid.Row="3" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Left" Margin="10,21" Click="Mas_Click">
+            <icons:ImageAwesome Icon="Plus" Margin="2" />
+        </RepeatButton>
+        <RepeatButton Name="MenosCoste" Grid.Row="3" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right" Margin="10,21" Click="Menos_Click" >
+            <icons:ImageAwesome Icon="Minus" Margin="4"/>
+        </RepeatButton>
+        <TextBlock Text="KILÓMETROS: " Grid.Column="3" Grid.Row="4" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="10,10,5,10"/>
+        <local:NumericTextBox x:Name="cajaKMRepos" Grid.Row="4" Grid.Column="4" Margin="0,40"
+                 TextChanged="cajaRepos_TextChanged"/>
+        <StackPanel Name="panelAvisosKMRepIni" Grid.Row="4" Grid.Column="5" Orientation="Horizontal">
+            <Image Name="AvisoKM" Source="/recursos/aviso2.png" Width="20" VerticalAlignment="Center"
+                   RenderOptions.BitmapScalingMode="Fant" Margin="5"
+                   ToolTip="El valor debe ser mayor que 0">
+            </Image>
+        </StackPanel>
+        <RepeatButton Name="MasKm" Grid.Row="4" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Left" Margin="10,21" Click="Mas_Click">
+            <icons:ImageAwesome Icon="Plus" Margin="2"/>
+        </RepeatButton>
+        <RepeatButton Name="MenosKm" Grid.Row="4" Grid.Column=" 4" Height="14" Width="25" VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right" Margin="10,21" Click="Menos_Click">
+            <icons:ImageAwesome Icon="Minus" Margin="4"/>
+        </RepeatButton>
+
+        <Button Name="botonAceptar" Grid.Row="5" Grid.Column="3" Content="Aceptar" 
+                Height="30" VerticalAlignment="Bottom" Margin="10,0,0,40" IsEnabled="False"
+                Click="botonAceptar_Click" Width="80" Style="{StaticResource EstiloBotonPeq}"/>
+        <Button Name="botonCancelar" Grid.Row="5" Grid.Column="4" Content="Cancelar" 
+                Height="30" VerticalAlignment="Bottom" Margin="20,0,25,40" IsDefault="True"
+                Click="botonCancelar_Click" Style="{StaticResource EstiloBotonPeq}"/>
+
+        <Button Name="Ayuda" Grid.Row="5" Grid.Column="0" Height="25" Width="40" Style="{StaticResource EstiloBotonAyuda}"
+                Click="Ayuda_Click">
+            <icons:ImageAwesome Icon="Question" Margin="3"/>
+        </Button>
+    </Grid>
+</Window>

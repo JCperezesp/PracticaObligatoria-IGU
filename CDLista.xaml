@@ -1,0 +1,114 @@
+﻿<Window x:Class="PracticaObligatoria.CDLista"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PracticaObligatoria"
+        mc:Ignorable="d"
+        Title="Detalles de vehículos" Height="600" Width="900" Closed="Window_Closed" 
+        Background="{StaticResource  FondoCDTablas}" MinWidth="450" MinHeight="350">
+
+    <!--DEFINICIÓN DE ESTILO LISTVIEW-->
+    <Window.Resources>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="{StaticResource CabeceraTabla}"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Foreground" Value="{StaticResource color1Fuente}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource color1Fuente}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource Cabecera2Tabla}"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Foreground" Value="{StaticResource letraItemTabla}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <!--CUERPO DEL DISEÑO-->
+    <DockPanel >
+        <Menu DockPanel.Dock="Top" Background="{StaticResource FondoMenu}" Foreground="{StaticResource letraMenu}">
+            <MenuItem Header="Archivo">
+                <MenuItem Name="Limpiar" Header="Limpiar" Click="MenuLimpiar_Click"/>
+                <MenuItem Name="Añadir" Header="Añadir">
+                    <MenuItem Name="VRandom" Header="Vehículo aleatorio" Click="VRandom_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Name="Ordenar" Header="Ordenar">
+                <MenuItem Name="Tabla1" Header="Tabla Vehículos">
+                    <MenuItem Name="OrdenarMatricula" Header="Matrícula" Click="OrdenarMatricula_Click"/>
+                    <MenuItem Name="OrdenarMarca" Header="Marca" Click="OrdenarMarca_Click"/>
+                    <MenuItem Name="OrdenarKm" Header="Kilómetros" Click="OrdenarKm_Click"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ListView Name="ListaVehiculos" Grid.Row="0" Margin="10" SelectionChanged="ListaVehiculos_SelectionChanged"
+                      Background="{StaticResource FondoListView}" SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="MATRÍCULA" DisplayMemberBinding="{Binding Matricula}" Width="140"/>
+                        <GridViewColumn Header="MARCA" DisplayMemberBinding="{Binding Marca}" Width="100"/>
+                        <GridViewColumn Header="KMiniciales" DisplayMemberBinding="{Binding Kilometros}" Width="100"/>
+                        <GridViewColumn Header="KM" DisplayMemberBinding="{Binding KilometrosAct}" Width="80"/>
+                        <GridViewColumn Header="Media consumo/100KM" DisplayMemberBinding="{Binding MediaConsumo}"/>
+                        <GridViewColumn Header="Media coste/100KM" DisplayMemberBinding="{Binding MediaCoste}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Name="ListaRepostajes" Grid.Row="1" Margin="10" SelectionChanged="ListaRepostajes_SelectionChanged"
+                      Background="{StaticResource FondoListView}" BorderBrush="DarkGray">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="FECHA" DisplayMemberBinding="{Binding Fecha}" Width="100"/>
+                        <GridViewColumn Header="KM" DisplayMemberBinding="{Binding KmRepos}" Width="100"/>
+                        <GridViewColumn Header="LITROS" DisplayMemberBinding="{Binding Litros}" Width="80"/>
+                        <GridViewColumn Header="COSTE" DisplayMemberBinding="{Binding Coste}" Width="80"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Image Source="/recursos/car1.png" Stretch="Uniform" Height="40" Width="40" Margin="20,10"
+                       RenderOptions.BitmapScalingMode="Fant"/>
+                    <Button Name="botonEliminarV" Width="70" Height="25"
+                        Margin="15" VerticalAlignment="Top" Content="Eliminar" IsEnabled="False"
+                        Style="{StaticResource EstiloBotonPeq}" Click="botonEliminarV_Click"/>
+                    <Button Name="botonModificarV" Width="70" Height="25"
+                        Margin="15" VerticalAlignment="Top" Content="Modificar" IsEnabled="False"
+                        Style="{StaticResource EstiloBotonPeq}" Click="botonModificarV_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Image Source="/recursos/fuelicon.png" Stretch="Uniform" Height="50" Width="50" Margin="20,10"
+                       RenderOptions.BitmapScalingMode="Fant"/>
+                    <Button Name="botonAgregarR" Grid.Row="1" Grid.Column="1" Width="120" Height="25" 
+                        IsEnabled="False"   Margin="5,15,10,15" VerticalAlignment="Top" Content="Agregar Repostaje"
+                        Style="{StaticResource EstiloBotonPeq}" Click="botonAgregarR_Click"/>
+                    <Button Name="botonEliminarR" Grid.Row="1" Grid.Column="1" Width="120" Height="25" 
+                        IsEnabled="False"   Margin="5,15,10,0" VerticalAlignment="Center" Content="Eliminar Repostaje/s"
+                        Style="{StaticResource EstiloBotonPeq}" Click="botonEliminarR_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</Window>
